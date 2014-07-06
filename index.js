@@ -51,7 +51,14 @@ module.exports = {
             path: '/{p*}',
             vhost: vhost,
             config: {
-                handler: read
+                pre:[plugin.plugins['kappa-ui'].isWebRequest],
+                handler: function(req, reply) {
+                    if (req.pre.isWebRequest) {
+                        plugin.plugins['kappa-ui'].render(req, reply);
+                        return;
+                    }
+                    read(req, reply);
+                }
             }
         });
 
