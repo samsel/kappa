@@ -51,7 +51,10 @@ test('get', function (t) {
         };
 
         server = new Hapi.Server();
-        server.pack.register(kappa, settings, function (err) {
+        server.pack.register({
+            plugin: kappa,
+            options: settings
+        }, function (err) {
             t.error(err);
             t.end();
         });
@@ -220,6 +223,21 @@ test('get', function (t) {
         });
     });
 
+    t.test('query params', function (t) {
+        var req = {
+            headers: {
+                host: 'npm.mydomain.com'
+            },
+            method: 'get',
+            url: '/-/by-field?field=name'
+        };
+
+        server.inject(req, function (res) {
+            t.strictEqual(res.payload, '{"pkg":{"name":"pkg"}}');
+            t.strictEqual(res.statusCode, 200);
+            t.end();
+        });
+    });
 });
 
 
@@ -246,7 +264,10 @@ test('head', function (t) {
 
 
         server = new Hapi.Server();
-        server.pack.register(kappa, settings, function (err) {
+        server.pack.register({
+            plugin: kappa,
+            options: settings
+        }, function (err) {
             t.error(err);
             t.end();
         });
@@ -376,7 +397,10 @@ test('post', function (t) {
         };
 
         server = new Hapi.Server();
-        server.pack.register(kappa, settings, function (err) {
+        server.pack.register({
+            plugin: kappa,
+            options: settings
+        }, function (err) {
             t.error(err);
             t.end();
         });
@@ -436,7 +460,10 @@ test('put', function (t) {
         };
 
         server = new Hapi.Server();
-        server.pack.register(kappa, settings, function (err) {
+        server.pack.register({
+            plugin: kappa,
+            options: settings
+        }, function (err) {
             t.error(err);
             t.end();
         });
@@ -496,7 +523,10 @@ test('delete', function (t) {
         };
 
         server = new Hapi.Server();
-        server.pack.register(kappa, settings, function (err) {
+        server.pack.register({
+            plugin: kappa,
+            options: settings
+        }, function (err) {
             t.error(err);
             t.end();
         });
